@@ -94,7 +94,7 @@ desktop.ini
 *.db
 *.pid
 *.seed
-data/
+/data/
 
 # BEGIN S11 LOCAL SNAPSHOT EXCLUSIONS
 **/.git/**
@@ -114,7 +114,6 @@ data/
 **/.gradle/**
 **/.env
 **/.env.*
-/data/**/
 /.s11-domain.json
 /.s11-spec.json
 !**/.env.example
