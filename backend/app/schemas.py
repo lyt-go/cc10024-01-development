@@ -29,3 +29,23 @@ class EntryPayload(BaseModel):
 class ActionPayload(BaseModel):
     action: str
     remark: str | None = None
+
+
+class RehearsalPagePayload(BaseModel):
+    """录入页面版本：DOM 快照全文 + 版本号。"""
+
+    模板编号: str
+    页面版本: str
+    dom: str
+    采集来源: str | None = None
+
+
+class RehearsalRunPayload(BaseModel):
+    页面版本: str
+
+
+class RehearsalConfirmPayload(BaseModel):
+    """提交预演：采纳某个锚点作为该字段唯一可执行来源。"""
+
+    页面版本: str
+    锚点编号: str

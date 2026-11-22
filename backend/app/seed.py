@@ -75,7 +75,31 @@ SEED_ROWS: dict[str, list[dict[str, Any]]] = {
   'XPath表达式': '元素定位样例3',
   '文本匹配': '元素定位样例3',
   '等待条件': '元素定位样例3',
-  '元素顺序': '元素定位样例3'}],
+  '元素顺序': '元素定位样例3'},
+ {'id': 4,
+  'status': '已生效',
+  'pending': False,
+  'abnormal': False,
+  '锚点编号': 'ELEM-0004',
+  '关联脚本': 'BEHA-0003',
+  '选择器类型': 'CSS',
+  'CSS表达式': '#main-product .price',
+  'XPath表达式': "//*[@id='main-product']//span[contains(@class,'price')]",
+  '文本匹配': '',
+  '等待条件': '可见',
+  '元素顺序': '1'},
+ {'id': 5,
+  'status': '已生效',
+  'pending': False,
+  'abnormal': False,
+  '锚点编号': 'ELEM-0005',
+  '关联脚本': 'BEHA-0003',
+  '选择器类型': 'CSS',
+  'CSS表达式': '.price',
+  'XPath表达式': "//*[contains(@class,'price')]",
+  '文本匹配': '',
+  '等待条件': '可见',
+  '元素顺序': '1'}],
     "data_extract": [{'id': 1,
   'status': '草稿',
   'pending': True,
@@ -111,7 +135,19 @@ SEED_ROWS: dict[str, list[dict[str, Any]]] = {
   '数据处理': '数据抽取样例3',
   '输出类型': '数据抽取样例3',
   '默认值': '数据抽取样例3',
-  '模板版本': '数据抽取样例3'}],
+  '模板版本': '数据抽取样例3'},
+ {'id': 4,
+  'status': '已生效',
+  'pending': False,
+  'abnormal': False,
+  '模板编号': 'DATA-0004',
+  '关联脚本': 'BEHA-0003',
+  '抽取字段': '价格',
+  '提取方式': 'CSS选择器',
+  '数据处理': '去空白',
+  '输出类型': '数值',
+  '默认值': '-',
+  '模板版本': 'v1'}],
     "clean_pipeline": [{'id': 1,
   'status': '草稿',
   'pending': True,
@@ -327,7 +363,19 @@ SEED_ROWS: dict[str, list[dict[str, Any]]] = {
   '快照时间': '2026-09-03',
   '快照类型': '页面快照样例3',
   '数据量': '页面快照样例3',
-  '回收时间': '2026-09-03'}],
+  '回收时间': '2026-09-03'},
+ {'id': 4,
+  'status': '已存档',
+  'pending': False,
+  'abnormal': False,
+  '快照编号': 'PAGE-0004',
+  '采集来源': 'BEHA-0003',
+  '页面版本': 'product-v1',
+  'DOM摘要': '主商品区与促销区均含价格的商品页',
+  '快照时间': '2026-11-01',
+  '快照类型': '预演基准',
+  '数据量': '1.2KB',
+  '回收时间': '-'}],
     "error_recover": [{'id': 1,
   'status': '待处理',
   'pending': True,
@@ -652,4 +700,42 @@ SEED_ROWS: dict[str, list[dict[str, Any]]] = {
   '预热策略': '内容缓存样例3',
   '命中率': '内容缓存样例3',
   '刷新间隔': '内容缓存样例3'}]
+}
+
+# ---------------- 抽取锚点预演的示例页面 ----------------
+# product-v1：主商品区与促销区都带价格，两个锚点指向不同区域，用于演示冲突。
+REHEARSAL_V1_DOM = (
+    '<html><body>'
+    '<div id="promo-zone"><div class="promo-card">'
+    '<span class="price promo-price">¥199.00</span>'
+    '</div></div>'
+    '<div id="main-product"><h1>智能音箱 Pro</h1>'
+    '<span class="price main-price">¥299.00</span>'
+    '</div>'
+    '</body></html>'
+)
+
+# product-v2：改版后的结构，#main-product 被替换为 section.product-hero，
+# 窄锚点失效、宽锚点 .price 仍可用，用于演示跨版本核对。
+REHEARSAL_V2_DOM = (
+    '<html><body>'
+    '<div id="promo-zone"><div class="promo-card">'
+    '<span class="price promo-price">¥189.00</span>'
+    '</div></div>'
+    '<section class="product-hero"><h1>智能音箱 Pro</h1>'
+    '<em class="price">¥279.00</em>'
+    '</section>'
+    '</body></html>'
+)
+
+# 预演页面库：按模板编号预置已录入的页面版本（DOM 快照全文）。
+REHEARSAL_PAGES: dict[str, list[dict[str, Any]]] = {
+    "DATA-0004": [
+        {
+            "页面版本": "product-v1",
+            "快照编号": "PAGE-0004",
+            "dom": REHEARSAL_V1_DOM,
+            "登记时间": "2026-11-01T09:00:00",
+        },
+    ],
 }

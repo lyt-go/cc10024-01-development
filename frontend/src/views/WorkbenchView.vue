@@ -6,6 +6,14 @@
         <p class="page-desc">{{ meta.desc }}</p>
       </div>
       <div class="page-actions">
+        <RouterLink
+          v-if="meta.key === 'data_extract'"
+          class="btn"
+          to="/data_extract/rehearsal"
+          data-testid="open-rehearsal"
+        >
+          抽取锚点预演
+        </RouterLink>
         <button class="btn primary" data-testid="open-create" type="button" @click="openCreate">
           登记{{ meta.entity }}
         </button>

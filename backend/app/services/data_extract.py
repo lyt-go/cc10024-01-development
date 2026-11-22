@@ -37,4 +37,10 @@ class DataExtractService(BaseModuleService):
         base["templates_in_pipeline"] = sum(
             1 for t in templates if any(
                 p.get("输入源") and t.get("关联脚本") in str(p.get("输入源", "")) for p in pipelines))
+        # 抽取预演产物：字段定位清单与已确认的可执行来源
+        manifest_files = persist.list_files("manifests", ".json")
+        base["rehearsal_manifests"] = len(manifest_files)
+        base["confirmed_bindings"] = sum(
+            1 for name in manifest_files
+            if (persist.read_json("manifests", name) or {}).get("confirmed"))
         return base
